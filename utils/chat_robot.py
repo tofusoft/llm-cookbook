@@ -12,7 +12,6 @@ import os
 
 import panel as pn
 import param
-import requests
 import wikipedia
 from dotenv import load_dotenv, find_dotenv
 from langchain.agents import AgentExecutor
@@ -26,6 +25,7 @@ from langchain_core.runnables import RunnablePassthrough
 from langchain_core.utils.function_calling import convert_to_openai_function
 from langchain_openai.chat_models import ChatOpenAI
 from pydantic import BaseModel, Field
+from security import safe_requests
 
 loaded = load_dotenv(find_dotenv(), override=True)
 # 从环境变量中获取 OpenAI API Key 或者直接赋值
@@ -81,7 +81,7 @@ def get_current_temperature(latitude: float, longitude: float):
     }
 
     # 发送 API 请求
-    response = requests.get(open_meteo_url, params=params)
+    response = safe_requests.get(open_meteo_url, params=params)
 
     # 检查响应状态码
     if response.status_code == 200:

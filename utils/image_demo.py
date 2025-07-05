@@ -12,10 +12,10 @@ import base64
 import io
 
 import gradio as gr
-import requests
 from PIL import Image
 
 from utils.image2text_chat import get_completion, InputImageType
+from security import safe_requests
 
 
 # 将PIL图像转换为base64编码的字符串
@@ -29,7 +29,7 @@ def image_to_base64_str(pil_image):
 # 从URL获取图片
 def get_image_from_url(image_url):
     try:
-        response = requests.get(image_url)
+        response = safe_requests.get(image_url)
         response.raise_for_status()
         return Image.open(io.BytesIO(response.content))
     except Exception as e:
