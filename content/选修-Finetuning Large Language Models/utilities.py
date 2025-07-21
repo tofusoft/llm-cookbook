@@ -1,7 +1,6 @@
 import datasets
 import tempfile
 import logging
-import random
 import config
 import os
 import yaml
@@ -9,6 +8,7 @@ import logging
 import time
 
 import transformers
+import secrets
 
 logger = logging.getLogger(__name__)
 global_config = None
@@ -123,7 +123,7 @@ def tokenize_and_split_data(training_config, tokenizer):
 
 # Tokenize and split data
 def load_dataset(dataset_path, tokenizer):
-    random.seed(42)
+    secrets.SystemRandom().seed(42)
     finetuning_dataset_loaded = datasets.load_dataset("json", data_files=dataset_path, split="train")
     tokenizer.pad_token = tokenizer.eos_token
     max_length = training_config["model"]["max_length"]

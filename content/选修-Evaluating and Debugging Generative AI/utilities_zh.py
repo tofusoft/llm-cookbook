@@ -1,4 +1,3 @@
-import random
 import sys
 from pathlib import Path
 
@@ -11,6 +10,7 @@ from matplotlib.animation import FuncAnimation, PillowWriter
 from torch.utils.data import DataLoader, Dataset
 from torchvision.utils import make_grid, save_image
 from tqdm.auto import tqdm
+import secrets
 
 
 # 定义模型的运算方式
@@ -395,7 +395,7 @@ class CustomDataset(Dataset):
 
     def subset(self, slice_size=1000):
         # 返回数据集的子集
-        indices = random.sample(range(len(self)), slice_size)
+        indices = secrets.SystemRandom().sample(range(len(self)), slice_size)
         return CustomDataset(self.sprites[indices], self.slabels[indices], self.transform, self.null_context)
 
     def split(self, pct=0.2):

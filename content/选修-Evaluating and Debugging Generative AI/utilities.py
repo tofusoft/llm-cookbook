@@ -1,5 +1,4 @@
 import os, sys
-import random
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -12,6 +11,7 @@ from matplotlib.animation import FuncAnimation, PillowWriter
 from PIL import Image
 from torch.utils.data import DataLoader, Dataset
 from torchvision.utils import make_grid, save_image
+import secrets
 
 
 def get_device():
@@ -396,7 +396,7 @@ class CustomDataset(Dataset):
 
     def subset(self, slice_size=1000):
         # return a subset of the dataset
-        indices = random.sample(range(len(self)), slice_size)
+        indices = secrets.SystemRandom().sample(range(len(self)), slice_size)
         return CustomDataset(self.sprites[indices], self.slabels[indices], self.transform, self.null_context)
 
     def split(self, pct=0.2):
